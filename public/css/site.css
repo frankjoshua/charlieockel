@@ -1,0 +1,217 @@
+/* Shared look for the Frank–Ockel pet memorial sites.
+   Each site sets --accent (and optionally --accent-soft) on :root in its own pages. */
+:root {
+  --paper: #faf7f2;
+  --ink: #2b2620;
+  --muted: #6f665c;
+  --line: #e4ddd2;
+  --card: #ffffff;
+  --accent: #8a5a44;
+  --accent-soft: #f1e6df;
+  --radius: 10px;
+  --max: 1100px;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.65 var(--sans);
+}
+
+img, video, iframe { max-width: 100%; display: block; }
+
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+.prose { max-width: 70ch; }
+
+/* Header */
+.site-head {
+  text-align: center;
+  padding: 56px 0 28px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(var(--accent-soft), var(--paper));
+}
+.site-head h1 {
+  font: 400 clamp(2rem, 5vw, 3.2rem)/1.15 var(--serif);
+  margin: 0 0 8px;
+}
+.site-head .dates {
+  font: italic 1.15rem var(--serif);
+  color: var(--muted);
+  margin: 0;
+}
+.site-head .epitaph {
+  font: 1.25rem/1.4 var(--serif);
+  margin: 14px 0 0;
+}
+.portrait {
+  width: min(520px, 100%);
+  margin: 0 auto 22px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgb(0 0 0 / .12);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 20px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .95rem;
+}
+.nav a { text-decoration: none; }
+.nav a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+
+main { padding: 36px 0 56px; }
+
+h2 { font: 400 1.7rem/1.25 var(--serif); margin: 2.2em 0 .6em; }
+h3 { font: 600 1.15rem/1.3 var(--serif); margin: 1.6em 0 .4em; }
+main > .wrap > h2:first-child { margin-top: 0; }
+
+/* Captioned photo grid */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.photos figure {
+  height: 100%;
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.photos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--line);
+}
+.photos figcaption {
+  padding: 10px 14px 12px;
+  font: 1rem/1.4 var(--serif);
+  text-align: center;
+}
+
+/* Uncaptioned gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gallery img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--line);
+}
+.gallery video { width: 100%; border-radius: 6px; background: #000; }
+.gallery .wide { grid-column: span 2; }
+
+/* Inline images in long-form pages */
+.inline-photo { margin: 28px 0; }
+.inline-photo img { border-radius: var(--radius); }
+.inline-photo figcaption { color: var(--muted); font-style: italic; margin-top: 8px; }
+
+.video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius);
+  background: #000;
+}
+
+.callout {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 18px;
+  margin: 28px 0;
+}
+
+.cta { text-align: center; font: 1.3rem var(--serif); margin: 40px 0 0; }
+
+/* Footer */
+.site-foot {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.site-foot p { margin: 4px 0; }
+
+/* Lightbox (progressive enhancement via js/gallery.js) */
+.lightbox {
+  border: 0;
+  padding: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(10 8 6 / .94);
+}
+.lightbox::backdrop { background: transparent; }
+.lightbox img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-width: 94vw;
+  max-height: 88vh;
+  object-fit: contain;
+}
+.lightbox p {
+  position: absolute;
+  left: 0; right: 0; bottom: 14px;
+  margin: 0;
+  text-align: center;
+  color: #eee;
+  font: 1.05rem var(--serif);
+}
+.lightbox button {
+  position: absolute;
+  border: 0;
+  background: rgb(255 255 255 / .12);
+  color: #fff;
+  font-size: 1.6rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.lightbox button:hover { background: rgb(255 255 255 / .25); }
+.lightbox .close { top: 16px; right: 16px; }
+.lightbox .prev { left: 16px; top: calc(50% - 24px); }
+.lightbox .next { right: 16px; top: calc(50% - 24px); }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1b1916;
+    --ink: #ece6dd;
+    --muted: #a99f93;
+    --line: #36312b;
+    --card: #24211d;
+  }
+  .site-head { background: linear-gradient(color-mix(in srgb, var(--accent) 22%, var(--paper)), var(--paper)); }
+  .callout { background: color-mix(in srgb, var(--accent) 18%, var(--paper)); }
+  a { color: color-mix(in srgb, var(--accent) 55%, white); }
+}
