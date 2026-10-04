@@ -78,6 +78,13 @@ def sort_key(path: Path, dates: dict[str, str]) -> tuple:
     return (1, "", path.name.lower())
 
 
+def size_attrs(image: Path) -> str:
+    """width/height attributes so the photo pile doesn't jump around while images load."""
+    out = subprocess.run(["identify", "-format", "%w %h", f"{image}[0]"],
+                         check=True, capture_output=True, text=True).stdout.split()
+    return f'width="{out[0]}" height="{out[1]}"'
+
+
 def main() -> None:
     files = sorted(p for p in ORIGINALS.iterdir() if p.suffix.lower() in PHOTO_EXT | VIDEO_EXT)
     slugs = [slug(p) for p in files]
@@ -94,14 +101,16 @@ def main() -> None:
             poster = PUBLIC / "video" / f"{name}.jpg"
             transcode(src, video, poster)
             items.append(
-                f'<li class="wide"><video controls preload="none" poster="video/{name}.jpg">'
+                f'<li><video controls preload="none" poster="video/{name}.jpg" {size_attrs(poster)}>'
                 f'<source src="video/{name}.mp4" type="video/mp4"></video></li>')
         else:
+            thumb = PUBLIC / "img" / "thumb" / f"{name}.jpg"
             resize(src, PUBLIC / "img" / "full" / f"{name}.jpg", 2000, 82)
-            resize(src, PUBLIC / "img" / "thumb" / f"{name}.jpg", 640, 78)
+            resize(src, thumb, 640, 78)
             items.append(
                 f'<li><a href="img/full/{name}.jpg" data-full>'
-                f'<img src="img/thumb/{name}.jpg" alt="{PET_NAME}, photo {len(items) + 1}" loading="lazy"></a></li>')
+                f'<img src="img/thumb/{name}.jpg" alt="{PET_NAME}, photo {len(items) + 1}" '
+                f'{size_attrs(thumb)} loading="lazy"></a></li>')
 
     template = (ROOT / "gallery.template.html").read_text()
     (PUBLIC / "images.html").write_text(template.replace("{{ITEMS}}", "\n        ".join(items)))
