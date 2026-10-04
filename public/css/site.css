@@ -312,8 +312,17 @@ main { padding-block: 64px 72px; }
   main { padding-block: 52px 60px; }
   .gallery { columns: 2 140px; column-gap: 16px; }
   .gallery > li { margin-bottom: 18px; padding: 6px 6px 18px; }
-  .friends { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
-  .friend .snap figcaption { font-size: 1.1rem; }
+  .prints, .friends, .crew { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 16px; }
+  .snap { padding: 7px 7px 9px; }
+  .snap::before { width: 56px; height: 18px; top: -8px; }
+  .snap figcaption, .friend .snap figcaption { font-size: 1.1rem; }
+  .crew .snap { padding: 8px 8px 12px; }
+  .crew .pet-name { font-size: 1.3rem; }
+  .crew .pet-dates { font-size: 1.05rem; }
+  .crew .visit { font-size: .75rem; }
+  .nav a { padding: 10px 16px; }
+  .button { padding: 15px 24px; }
+  .section + .section { margin-top: 64px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

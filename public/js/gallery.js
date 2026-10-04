@@ -42,4 +42,12 @@
     if (event.key === "ArrowLeft") show(index - 1);
     if (event.key === "ArrowRight") show(index + 1);
   });
+  let touchX = null;
+  box.addEventListener("touchstart", (event) => { touchX = event.touches[0].clientX; }, { passive: true });
+  box.addEventListener("touchend", (event) => {
+    if (touchX === null) return;
+    const dx = event.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+  });
 })();
